@@ -1,4 +1,4 @@
-// Simple Linked list Implementation with different inbuilt function calls
+// Doubly Linked list Implementation with different inbuilt function calls
 
 import java.util.LinkedList;
 import java.util.Iterator;  
