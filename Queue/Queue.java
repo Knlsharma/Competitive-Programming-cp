@@ -1,24 +1,66 @@
 class queue
 {
 
-static int size,front,rear;
+int size,front,rear;
 
-int[] x = new int[5];
+int x[] = new int[7];
 
-public static void enqueue (int data)
+public void enqueue (int data)
+{
+if(!isFull())
 {
 x[rear]=data;
-rear++;
+rear =(rear + 1) % 7;
 size++;
 }
 
-public static void show()
+else
+System.out.println("FULL");
+}
+
+public  void show()
 {
 for(int i=0;i<size;i++)
 {
-System.out.println("Element is" + x[i]);
+System.out.println("Element is" + x[(front+i)%7]);
 
 }
+}
+
+public void dequeue ()
+{
+
+if(!isEmpty())
+{
+int data=x[front];
+front =(front + 1) % 7;
+System.out.println("deleted is" + x[(front)%7]);
+size--;
+}
+
+else
+{
+System.out.println("empty");
+}
+
+
+}
+
+public int getsize()
+{
+System.out.println("Size is" + size);
+return size;
+}
+
+
+public boolean isEmpty()
+{
+return size==0;
+}
+
+public boolean isFull()
+{
+return size==5;
 }
 
 
@@ -30,15 +72,23 @@ public static void main(String args[])
 // dequeue - Deletion
 
 
+queue k =new queue();
 
 
+k.enqueue(5);
+k.enqueue(6);
+k.enqueue(7);
 
-enqueue(5);
-enqueue(6);
-enqueue(7);
+k.enqueue(51);
+k.enqueue(61);
+k.enqueue(71);
+k.dequeue();
+k.dequeue();
 
-show();
-
+k.show();
+k.getsize();
+System.out.println(k.isEmpty());
+System.out.println(k.isFull());
 
 }
 }

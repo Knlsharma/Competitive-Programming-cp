@@ -9,7 +9,8 @@ Node next;
 
 class linkedlist
 {
-static Node head;
+static Node head,prev;
+static int size;
 
 public static void insertAtEnd(int data)
 {
@@ -31,7 +32,7 @@ while(n.next!=null)
 n = n.next;
 }
 n.next =  node;
-
+size++;
 }
 
 }
@@ -61,6 +62,7 @@ node.data=data;
 node.next=null;
 node.next=head;
 head=node;
+size++;
 }
 
 
@@ -84,6 +86,7 @@ n=n.next;
 }
 node.next=n.next;
 n.next=node;
+size++;
 }
 }
 
@@ -105,34 +108,91 @@ n1 = n.next;
 n.next = n1.next;
 System.out.println("n1 " + n1.data);
 n1 = null;
-		}
+size--;
+}
 	}
 	
 public static void deleteFromEnd()
 {
 Node n=head;
+
 while(n.next!=null)
 { 
+prev=n;
+System.out.println("prev is" + prev.data);
 System.out.println(n.data);
 n=n.next;
 }
-System.out.println(n.data);
+
+prev.next=null;
+// n.next=null;
+System.out.println("deleted node is" + n.data);
+size--;
 }
+
+
+
+
+public static  void size()
+{
+
+System.out.println("The size is" + size);
+
+
+}
+
+
+public static void search(int x)
+{
+Node n =head;
+
+while(n.data!=x)
+{
+n=n.next;
+}
+
+System.out.println("data found at" + n.data);
+
+}
+
+
+public static void reversedTraversal()
+{
+Node prevt=null;
+Node next1;
+Node cur = head;
+while(cur!=null)
+{
+
+next1=cur.next;
+cur.next=prevt;
+prevt=cur;
+cur=next1;
+}
+head=prevt; 
+show();
+}
+
+
+
 
 public static void main(String args[])
 {
 
 	insertAtEnd(18); // 0th object
-	insertAtEnd(45);
-	insertAtEnd(12);
-	insertAtEnd(45);
-	insertAtEnd(76);
-	insertAtStart(4556);
-        insertInBetween(65,1);
-	deleteAt(3);
-	deleteFromEnd();
-	 // deleteFromStart();
+	insertAtEnd(45);  // 1st object
+	insertAtEnd(12);    // 2nd object
+	insertAtEnd(45);      // 3rd object
+	insertAtEnd(76);         // 4th object
+	insertAtStart(4556);        // 5th object
+        insertInBetween(65,1);         // 6th object
+	deleteAt(3);                      // 7th object
+	deleteFromEnd();                     // 8th object
+	 // deleteFromStart();                 
          show();
+	size();
+	search(45);
+	reversedTraversal();
 
 }
 }
