@@ -118,9 +118,56 @@ for(int i=0; i < pos-1;i++)
  
  }
  
+  static void deleteBeg()
  
+{
+	
+	Node n = head;
+	if(n == null)
+	{
+		System.out.println("Underflow");
+		
+	}
+	
+     head = head.next;	
+	 head.prev = null;
+	 n = null;
+	 
+	 System.out.println("Deleted");
+	
+	
+	
  
- 
+}
+
+  static void deleteAtPos(int pos)
+ {
+	 Node temp;
+	 Node n= head;
+	 for(int i=0; i< pos-1;i++)
+	 {
+    n=n.next;
+	 }
+	    temp = n.next;  
+        n.next = temp.next;  
+        temp.next.prev = n;  
+        temp=null;
+	 
+	}
+	
+	  static void deleteAtLast()
+ {
+	
+		
+		Node n = head;   
+        if(n.next != null)  
+        {  
+            n = n.next;   
+        }  
+		n.prev.next=null;
+		n=null;
+		
+ }
  
  
  
@@ -131,11 +178,14 @@ for(int i=0; i < pos-1;i++)
   insertAtHead(55);
    insertAtHead(66);
     insertAtHead(455);
-insertAtLast(653);     // 653
+  insertAtLast(653);     // 653
 insertAtLast(6556);   //  653-> 6556 
 insertAtLast(577);	 // 653-> 6556 -> 577
-insertAtPos(12,1);
-insertAtPos(16,3);
+insertAtPos(12,1); 
+ insertAtPos(16,3); 
+  // deleteBeg();
+  //  deleteAtPos(1);
+   deleteAtLast();
 
 
  showAll();
