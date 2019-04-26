@@ -175,6 +175,27 @@ show();
 
 
 
+public static void sort()
+{
+    Node ptr ,pt2;
+    
+    for (ptr = head; ptr.next != null; ptr = ptr.next)
+    
+    {
+        for( pt2=ptr.next;pt2!=null;pt2=pt2.next)
+        
+        {
+            if(pt2.data < ptr.data)
+             {
+             int temp=ptr.data;
+             ptr.data=pt2.data;
+             pt2.data=temp;
+             }
+        }
+    }
+}
+
+
 
 public static void main(String args[])
 {
@@ -185,14 +206,17 @@ public static void main(String args[])
 	insertAtEnd(45);      // 3rd object
 	insertAtEnd(76);         // 4th object
 	insertAtStart(4556);        // 5th object
-        insertInBetween(65,1);         // 6th object
+ /*       insertInBetween(65,1);         // 6th object
 	deleteAt(3);                      // 7th object
 	deleteFromEnd();                     // 8th object
 	 // deleteFromStart();                 
          show();
 	size();
 	search(45);
-	reversedTraversal();
+	reversedTraversal(); */
+		sort();
+	show();
+	
 
 }
 }

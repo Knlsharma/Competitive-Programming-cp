@@ -155,17 +155,22 @@ for(int i=0; i < pos-1;i++)
 	 
 	}
 	
-	  static void deleteAtLast()
+	  static void deleteAtLast(int count)
  {
-	
+	   Node k;
 		
 		Node n = head;   
-        if(n.next != null)  
+        if(n.next != null && count == 1)  
         {  
             n = n.next;   
+			count++;
         }  
-		n.prev.next=null;
+		
+		 k=n.prev;
+		k.next=null;
+		
 		n=null;
+	
 		
  }
  
@@ -185,7 +190,7 @@ insertAtPos(12,1);
  insertAtPos(16,3); 
   // deleteBeg();
   //  deleteAtPos(1);
-   deleteAtLast();
+   deleteAtLast(1);
 
 
  showAll();
