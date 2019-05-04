@@ -77,12 +77,12 @@ static Node addAfter(int data, int item)
 			return last; 
 		} 
 		p = p.next; 
-	} while(p != last.next); 
+		} while(p != last.next); 
 
-	System.out.println(item + " not present in the list."); 
-	return last; 
+		System.out.println(item + " not present in the list."); 
+		return last; 
 
-} 
+	} 
 
 static void traverse(Node last) 
 { 
@@ -150,26 +150,47 @@ static void traverse(Node last)
    
    static void delAtBeg()
    {
-	   Node p =last.next;
-	    // Node temp = last;
 	   
-	   last.next = p.next;
+	   
+	   
+	   Node p =last.next;
+	 // Node temp = last;
+		Node t =last;
+	 // last = last.next.next;
+	 t.next = p.next;
+	   
 	   System.out.println(p.data);
-	   p.next = last.next;
-	   last.next = p;
-	   last = p.next;
+	   p = null; 
+	   
+	 
+	   
 	    }
    
    static void reverse(Node last)
    {
-	  // Node temp = last;  
-	   Node n = last.next.next;
-	   if(n != last)
-	   {
-		  		   
-	   reverse(last.next);
-	   System.out.println(last.data);
-	   }
+	  
+	  
+	  Node prev = last;
+	   Node current =last.next;
+	  Node next1 = null ;
+	  Node first = last.next;
+	  
+	  if ( last == null || last.next == last )
+			return ;
+	  
+	  
+	  last.next = null;
+	  
+	  while(current != null)
+	  {
+		  
+		  next1 = current.next;
+		  current.next = prev;
+		  prev = current;
+		  current = next1;
+	  }
+	 
+	last = first;
    }
    
    
@@ -189,11 +210,13 @@ public static void main(String[] args)
 	last = addAfter(10, 8); 
 	delAtLast();
 	delAtLast();
-	// delAtBeg();
-
-	traverse(last); 
+	 delAtBeg();
+      delAtBeg();
+	   delAtBeg();
+	 // traverse(last); 
 	
-	reverse(last);
+	// reverse(last);
+	 traverse(last);
 } 
 } 
 
