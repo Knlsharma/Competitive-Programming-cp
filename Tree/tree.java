@@ -1,7 +1,7 @@
-import java.util.*;
-import java.io.*;
+import java.util.*;  
 
-class Node {
+class Node 
+{
     Node left;
     Node right;
     int data;
@@ -33,12 +33,12 @@ class tree
 	  public static void preOrder(Node root) {
 
         if( root !=  null)
-
+			
         {  
 		
         System.out.print(root.data + " ");
-        inOrder(root.left);
-		inOrder(root.right);
+        preOrder(root.left);
+		preOrder(root.right);
 
         }
 
@@ -49,8 +49,8 @@ class tree
         if( root !=  null)
 
         {  
-		inOrder(root.left);
-        inOrder(root.right);
+		postOrder(root.left);
+        postOrder(root.right);
 		System.out.print(root.data + " ");
         
 
@@ -58,41 +58,29 @@ class tree
 
     }
 	
-	public static boolean contains(Node root , int value) {
-		
-		if(root.data ==  data2) 
-            return true;
-	 	
-
-         else if (value < data)
-		 {
-			 if( root.left == null)
-			 {
-				 return false ;
-			 }
-			  else
-			  {
-				 return root.left = contains(root ,value);
-				  
-			  }  
-		 }
-		 
-		 
-		  else
-		  {
-			  if( root.right == null)
-			 {
-				 return false ;
-			 }
-			  else
-			  {
-				 return root.right = contains(root ,value);		  
-			  }
-		  
-	      }  		
-		
-		
-}
+	 public static boolean flag = false; 
+	
+	 public static void searchNode(Node root, int value){  
+        //Check whether tree is empty  
+        if(root == null){  
+          System.out.println("Tree is empty");  
+        }  
+        else{  
+          //If value is found in the given binary tree then, set the flag to true  
+          if(root.data == value){  
+            flag = true;  
+               return;  
+          }  
+          //Search in left subtree  
+          if(flag == false && root.left != null){  
+             searchNode(root.left, value);  
+          }  
+          //Search in right subtree  
+          if(flag == false && root.right != null){  
+             searchNode(root.right, value);  
+          }  
+        }  
+      }  
 	
 	
 	
@@ -123,12 +111,20 @@ class tree
         }
         scan.close();
         inOrder(root);
-		System.out.println("----------");
+		System.out.println("---------->>  INORER");
 		preOrder(root);
-		System.out.println("----------");
+		System.out.println("---------->>  PREORDER");
 		postOrder(root);
-		System.out.println("----------");
-		contains(root , 56);
+		System.out.println("---------->>  POSTORDER");
+		searchNode(root , 56);
+		
+		 if(flag)  
+          System.out.println("Element is present in the binary tree");  
+        else  
+          System.out.println("Element is not present in the binary tree");   
+
+	     
+	   
 		
     }	
 }
