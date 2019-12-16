@@ -1,3 +1,5 @@
+[![Gitter](https://badges.gitter.im/Algo_Ds_Notes/Algo_Ds_Notes.svg)](https://gitter.im/Knlsharma)
+
 Join with me on telegram group https://t.me/joinchat/GL4Y8RREZbz
 
 ## Welcome to Algorithm and Data Structure Notes :clipboard:
