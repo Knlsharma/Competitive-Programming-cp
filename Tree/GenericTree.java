@@ -1,5 +1,4 @@
 
-
 // find size or number of nodes in genric tree
   public static int size(Node node) {
     int s = 0;
@@ -27,7 +26,6 @@
 
 // on basis of edges (Not on basis of nodes)
   public static int height(Node node) {
-    // write your code here
     int ht = -1;
     for (Node child : node.children) {
       int newM = height(child);
@@ -42,7 +40,6 @@
      **/
 
     public static void traversals(Node node) {
-    // write your code here
     // Euler left on deep recursion
     System.out.println("Node Pre " + node.data);
     
