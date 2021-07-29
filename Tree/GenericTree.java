@@ -24,7 +24,7 @@
     return m;
   }
 
-// on basis of edges (Not on basis of nodes)
+// on basis of edges (Not on basis of nodes
   public static int height(Node node) {
     int ht = -1;
     for (Node child : node.children) {
