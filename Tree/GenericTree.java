@@ -1,5 +1,30 @@
 
 
+// find size or number of nodes in genric tree
+  public static int size(Node node) {
+    int s = 0;
+
+    for (Node child : node.children) {
+      s += size(child);
+    }
+    s += 1;
+
+    return s;
+  }
+
+  // find max in gen. tree
+  public static int max(Node node) {
+    int m = Integer.MIN_VALUE;
+
+    for (Node child : node.children) {
+      int cm = max(child);
+      m = Math.max(m, cm);
+    }
+    m = Math.max(m, node.data);
+
+    return m;
+  }
+
 // on basis of edges (Not on basis of nodes)
   public static int height(Node node) {
     // write your code here
@@ -66,7 +91,7 @@
    * REMOVE PRINT ADD
    * */
 
-  
+
   public static void levelOrderLinewise(Node node) {
         
     Queue<Node> mainQ = new ArrayDeque<>();
@@ -94,3 +119,51 @@
         }
     }
   }
+
+  /**
+  * Levelorder Linewise Zig Zag
+  * STACK, main stack , child stack , counter for level
+  * REMOVE PRINT ADD
+  **/
+
+
+  public static void levelOrderLinewiseZZ(Node node) {
+    // write your code here
+    
+    Stack<Node> ms = new Stack<>();
+    Stack<Node> cs = new Stack<>();
+    int level = 1;
+    ms.push(node);
+    
+    while(ms.size() > 0)
+    {
+        node = ms.pop();
+        System.out.print(node.data + " ");
+        
+        if(level  % 2 == 1)
+        {
+            for(int i = 0 ; i < node.children.size(); i++)
+            {
+                Node child =  node.children.get(i);
+                cs.push(child);
+            }
+        }
+        else
+        {
+            for(int i = node.children.size() - 1 ; i >= 0; i--)
+            {
+                Node child =  node.children.get(i);
+                cs.push(child);
+            }    
+        }
+        
+        if( ms.size() == 0)
+        {
+            ms = cs;
+            cs = new Stack<>();
+            level++;
+            System.out.println();
+        }
+    }
+  }
+
