@@ -91,7 +91,7 @@
    * */
 
 
-  public static void levelOrderLinewise(Node node) {
+  public static void levelOrderLinewiseApproach1(Node node) {
         
     Queue<Node> mainQ = new ArrayDeque<>();
     
@@ -163,6 +163,129 @@
             level++;
             System.out.println();
         }
+    }
+  }
+
+
+  /**
+   *  Levelorder Linewise (generic Tree) 
+   * using -1 as identifier for end of line and Queue
+   * REMOVE PRINT ADD
+   * */
+
+
+  public static void levelOrderLinewiseApproach2(Node node) {
+        
+    Queue<Node> mainQ = new ArrayDeque<>();
+    
+    mainQ.add(node);
+    mainQ.add(new Node(-1));
+    
+    while(mainQ.size() > 0)
+    {
+        node = mainQ.remove();
+        if(node.data != -1)
+        {
+          System.out.print(node.data + " ");
+        
+        // Add childerns for below levels
+        for(Node child : node.children)
+        {
+            mainQ.add(child);
+        }
+
+        }
+        else
+        {
+          if(mainQ.size() > 0)
+          {
+            mainQ.add(new Node(-1));
+            System.out.println();
+          }
+
+        }
+    }
+  }
+
+
+    /**
+   *  Levelorder Linewise (generic Tree) 
+   * using count approach as identifier for different level and Queue
+   * REMOVE PRINT ADD children
+   * */
+
+
+  public static void levelOrderLinewiseApproach3(Node node) {
+        
+    Queue<Node> mainQ = new ArrayDeque<>();
+    
+    mainQ.add(node);
+    
+    while(mainQ.size() > 0)
+    {
+      int currentSize = mainQ.size();
+
+      for(int i = 0 ; i < currentSize ; i++)
+      { 
+        node = mainQ.remove();
+
+        System.out.print(node.data + " ");
+        
+        // Add childerns for below levels
+        for(Node child : node.children)
+        {
+            mainQ.add(child);
+        }
+
+      }
+        
+      System.out.println();
+    }
+  }
+
+      /**
+   *  Levelorder Linewise (generic Tree) 
+   * Using Pair class and maintaining level and Queue
+   * REMOVE PRINT ADD children
+   * */
+
+    private static class Pair
+    {
+      Node node;
+      int level;
+
+      Pair(Node node, int level)
+      {
+        this.node = node;
+        this.level = level;
+      }
+
+    }
+
+
+  public static void levelOrderLinewiseApproach4(Node node) {
+        
+    Queue<Pair> mainQ = new ArrayDeque<>();
+    
+    mainQ.add(new Pair(node , 1));
+
+    int level = 1;
+
+    while(mainQ.size() > 0)
+    {
+      Parir removePair = mainQ.remove();
+      if(removePair.level > level)
+      {
+      level = removePair.level;
+      System.out.println();
+      }
+
+       System.out.println(removePair.node.data + " ");
+       for(Node child : removePair.node.children)
+       {
+        Pair cp = new Pair(child,p.level+1);
+         mainQ.add(cp)
+       }
     }
   }
 
