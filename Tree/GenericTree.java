@@ -367,3 +367,215 @@
     }
     return lastNodetail;
   }
+
+  // Find In Generic Tree
+  public static boolean find(Node node, int data) {
+    if(node.data == data)
+    {
+        return true;
+    }
+    
+    for(Node child : node.children)
+    {
+        boolean result = find(child, data);
+        if(result)
+        {
+            return true;
+        }
+    }
+    return false;
+  }
+
+   // Node To Root Path In Generic Tree
+   public static ArrayList<Integer> nodeToRootPath(Node node, int data){
+    if(node.data == data)
+    {
+        ArrayList<Integer> al = new ArrayList<Integer>();
+        al.add(node.data);
+        return al;
+    }
+    
+    for(Node child : node.children)
+    {
+         ArrayList<Integer> pathTillChild = nodeToRootPath(child, data); 
+         if(pathTillChild.size() > 0)
+         {
+             pathTillChild.add(node.data);
+             return pathTillChild; 
+         }
+    }
+    return new ArrayList<>();
+ }
+
+   // Lowest Common Ancestor (generic Tree)
+   public static int lca(Node node, int d1, int d2) {
+      
+      ArrayList<Integer> p1 =  nodeToRootPath(node, d1); // path1
+      
+      ArrayList<Integer> p2 =  nodeToRootPath(node, d2); // path2
+      
+      int i = p1.size() - 1;
+      int j = p2.size() - 1;
+      
+      while(i >= 0 && j >= 0 && p1.get(i) == p2.get(j))
+      {
+          i--;
+          j--;
+      }
+      // first unequal element found by incrementing
+      i++;
+      j++;
+      
+      return p1.get(i);
+  }
+
+  // Distance Between Two Nodes In A Generic Tree
+    public static int distanceBetweenNodes(Node node, int d1, int d2) {
+    ArrayList<Integer> p1 = nodeToRootPath(node, d1);
+    ArrayList<Integer> p2 = nodeToRootPath(node, d2);
+
+    int i = p1.size() - 1;
+    int j = p2.size() - 1;
+
+   while (i >= 0 && j >= 0 && p1.get(i) == p2.get(j)) {
+      i--;
+      j--;
+    }
+    i++;
+    j++;
+    
+    return i+j;
+  }
+
+  // Are Trees Similar In Shape
+  public static boolean areSimilar(Node n1, Node n2) {
+      if(n1.children.size() != n2.children.size())
+      {
+          return false;
+      }
+      
+      for(int i = 0 ; i < n2.children.size() ; i++)
+      {
+          Node c12 = n2.children.get(i);
+          Node c13 = n1.children.get(i);
+          
+          if(areSimilar(c12, c13) == false)
+          {
+              return false;
+          }
+      }
+      return true;
+  }
+
+    // Are Trees Mirror In Shape
+    public static boolean areMirror(Node n1, Node n2) {
+    if (n1.children.size() != n2.children.size())
+    {
+        return false;
+    }
+    
+    for(int i = 0 ;  i < n2.children.size() ; i++)
+    {
+        int j = n2.children.size() - 1 - i;
+        Node c2 = n2.children.get(i);
+        Node c1 = n1.children.get(j);
+        
+        if(areMirror(c1, c2) == false)
+        {
+            return false;
+        }
+    }
+    return true;
+  }
+
+  // Is Generic Tree Symmetric using mirror code snippet
+    public static boolean IsSymmetric(Node node) {
+      // if mirror image then symetric always
+    return areMirror(node,node);
+  }
+
+   public static void display(Node node) {
+    String str = node.data + " -> ";
+    for (Node child : node.children) {
+      str += child.data + ", ";
+    }
+    str += ".";
+    System.out.println(str);
+
+    for (Node child : node.children) {
+      display(child);
+    }
+  }
+
+  public static Node construct(int[] arr) {
+    Node root = null;
+
+    Stack<Node> st = new Stack<>();
+    for (int i = 0; i < arr.length; i++) {
+      if (arr[i] == -1) {
+        st.pop();
+      } else {
+        Node t = new Node();
+        t.data = arr[i];
+
+        if (st.size() > 0) {
+          st.peek().children.add(t);
+        } else {
+          root = t;
+        }
+
+        st.push(t);
+      }
+    }
+
+    return root;
+  }
+  
+  static int size;
+  static int max;
+  static int height;
+  static int min;
+  public static void multiSolver(Node node, int depth)
+  {
+    size++;
+    max = Math.max(max,node.data);
+    min = Math.min(min,node.data);
+    height = Math.max(depth, height);
+
+    for(Node child: node.children){
+      multiSolver(child, depth + 1);
+    }
+
+  }
+
+   public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int n = Integer.parseInt(br.readLine());
+    int[] arr = new int[n];
+    String[] values = br.readLine().split(" ");
+    for (int i = 0; i < n; i++) {
+      arr[i] = Integer.parseInt(values[i]);
+    }
+
+    Node root = construct(arr);
+
+    size = 0;
+    height = 0;
+    max = Integer.MIN_VALUE;
+    min = Integer.MAX_VALUE;
+
+    multiSolver(root);
+
+    // display(root);
+    System.out.println(root, 0);
+    // stack parameters changes as level changes example in depth
+    System.out.println("Minimum " + min);
+    System.out.println("Maximum " + max);
+    System.out.println("Size " + size);
+    System.out.println("Height " + height);
+
+  }
+
+
+
+
