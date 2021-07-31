@@ -262,7 +262,7 @@
 
     }
 
-
+  // pair class above
   public static void levelOrderLinewiseApproach4(Node node) {
         
     Queue<Pair> mainQ = new ArrayDeque<>();
@@ -289,3 +289,81 @@
     }
   }
 
+  // Mirror of tree  
+  public static void mirror(Node node){
+      
+      for(Node child : node.children)
+      {
+          mirror(child);
+      }
+      Collections.reverse(node.children);
+  }
+
+ 
+    // Remove Leaves In Generic Tree
+    public static void removeLeaves(Node node) {
+      // pre - order
+      /** post order results in some error 
+       * Concurrent modification exception
+       * and deletes extra leaf node **/
+      
+     for(int i = node.children.size() - 1 ; i >= 0 ; i--)
+     {
+         Node child = node.children.get(i);
+         if(child.children.size() == 0)
+         {
+             node.children.remove(child);
+         }
+     }
+     
+     for (Node child : node.children) {
+      removeLeaves(child);
+    }
+  }
+
+  // Non-efficient : Linearize A Generic Tree
+    public static void linearizeApproach1(Node node){
+
+    for(Node child: node.children){
+      linearize(child);
+    }
+    
+    // post
+    while(node.children.size() > 1)
+    {
+        Node lastChild = node.children.remove(node.children.size() -1);
+        Node secondChild = node.children.get(node.children.size() -1);
+        Node secondLastChildTail = getTail(secondChild);
+        secondLastChildTail.children.add(lastChild);
+    }
+  }
+  
+  public static Node getTail(Node node)
+  {
+      while(node.children.size() == 1)
+      {
+        node = node.children.get(0);
+      }
+      
+      return node;
+  }
+
+    //Efficient Approach Linearize A Generic Tree
+    public static Node linearizeApproach2(Node node){
+
+      if(node.children.size() == 0)
+      {
+        return node;
+      }
+
+      Node lastNodetail = linearizeApproach2(node.children.get(node.children.size() - 1));
+    
+    while(node.children.size() > 1)
+    {
+        Node lastChild = node.children.remove(node.children.size() -1);
+        Node secondChild = node.children.get(node.children.size() -1);
+        Node secondLastChildTail =  linearizeApproach2(secondChild);
+        secondLastChildTail.children.add(lastChild);
+    }
+    return lastNodetail;
+  }
