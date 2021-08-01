@@ -557,6 +557,9 @@
       arr[i] = Integer.parseInt(values[i]);
     }
 
+    predecessor = null;
+    successor = null;
+    state = 0;
     Node root = construct(arr);
 
     size = 0;
@@ -564,7 +567,17 @@
     max = Integer.MIN_VALUE;
     min = Integer.MAX_VALUE;
 
+    ceil = Integer.MAX_VALUE;
+    floor = Integer.MIN_VALUE;
+
     multiSolver(root);
+
+    // calculate diameter
+    calculateDiaViaHeight(root);
+    System.out.println(dia);
+
+    maximumSubtreeSum(root);
+    System.out.println(max_node_sum + "@" + max_sum);
 
     // display(root);
     System.out.println(root, 0);
@@ -575,6 +588,151 @@
     System.out.println("Height " + height);
 
   }
+
+
+// Predecessor And Successor Of An Element
+// use travel and change startegy 
+
+  static Node predecessor;
+  static Node successor;
+  static int state;
+  public static void predecessorAndSuccessor(Node node, int data) {
+    if (state == 0)
+    {
+      if (node.data == data)
+      {
+        state = 1;
+      }
+      else
+      {
+        predecessor = node;
+      }
+    }
+    else if (state == 1)
+    {
+      successor = node;
+      state = 2;
+    }
+
+    for (Node child : node.children)
+    {
+      predecessorAndSuccessor(child, data);
+    }
+  }
+
+  // Ceil And Floor In Generic Tree
+  /** floor : just largest among smallest
+  * ceil : just smallest among largest
+  * use travel and change startegy **/
+  static int ceil;
+  static int floor;
+  public static void ceilAndFloor(Node node, int data) {
+    
+    // ceil calculated  
+    if (node.data > data)
+    {
+      if (node.data < ceil)
+      {
+        ceil = node.data;
+      }
+    }
+
+     // floor calculated
+    if (node.data < data)
+    {
+      if (node.data > floor)
+      {
+        floor = node.data;
+      }
+    }
+
+    for (Node child : node.children)
+    {
+      ceilAndFloor(child, data);
+    }
+  }
+
+  // Kth Largest Element In Tree 
+    // travel and change
+  // using ceilAndFloor fnc
+    public static int kthLargest(Node node, int k) {
+
+    floor = Integer.MIN_VALUE;
+    int factor = Integer.MAX_VALUE;
+
+
+    for (int i = 0 ; i < k ; i++) {
+      ceilAndFloor(node, factor); // will set floor
+      factor = floor;
+      floor = Integer.MIN_VALUE;
+    }
+    return factor;
+  }
+
+  // Node With Maximum Subtree Sum
+  // travel and change
+    static int max_node_sum = 0;
+  static int max_sum = Integer.MIN_VALUE;
+  static int maximumSubtreeSum(Node node)
+  {
+      int sum = 0;
+      
+      for(Node child : node.children)
+      {
+          int csum = maximumSubtreeSum(child);
+          sum += csum; 
+      }
+      sum += node.data;
+      
+      if(sum > max_sum)
+      {
+          max_sum =sum;
+          max_node_sum = node.data;
+      }
+      return sum;
+  }
+
+  // Find Diameter in tree
+  /**
+   * using deepest and second deepest child
+   */
+
+  static int dia = 0;
+  static int calculateDiaViaHeight(Node node)
+  {
+      
+      int dch = -1;
+      int sdch = -1;
+
+    for (Node child : node.children) {
+      int ch  =  calculateDiaViaHeight(child);
+      
+      if(ch >  dch)
+      {
+          sdch = dch;
+          dch = ch;
+      }
+      else if( ch > sdch)
+      {
+          sdch = ch;
+      }
+    }
+    
+    if(sdch + dch + 2 > dia)
+    {
+        dia = sdch + dch + 2;
+    }
+
+  dch = dch + 1;
+  return dch;
+  }
+
+
+  // Iterative Preorder And Postorder Of Generic Tree
+
+
+
+
 
 
 
