@@ -101,6 +101,8 @@ class tree
         }
     }
 
+
+
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         int t = scan.nextInt();
@@ -126,5 +128,79 @@ class tree
 	     
 	   
 		
+    }
+
+    /**
+     * print binary tree
+     * 
+     */ 
+
+    public static void displayNode(Node node)
+    {
+        if(node == null)
+        {
+            return;
+        }
+        String str = "";
+
+        str += node.left == null ? "." : node.left.data + "";
+        str += " <- " + node.data + " -> " +;
+        str += node.right == null ? "." : node.right.data + "";
+
+        System.out.println(str);
+        displayNode(node.left);
+        displayNode(node.right);
     }	
+
+      public static int size(Node node) {
+      if(node == null)
+      {
+          return 0;
+      }
+    
+    int leftSize = size(node.left);
+    int rightSize = size(node.right);
+    int totalSize = leftSize + rightSize + 1;
+    return totalsize;
+  }
+
+  public static int sum(Node node) {
+    if(node == null)
+      {
+          return 0;
+      }
+    
+    int leftSum = sum(node.left);
+    int rightSum = sum(node.right);
+    int totalSum = leftSize + rightSize + node.data;
+    return totalSum;
+  }
+
+  public static int max(Node node) {
+    if(node == null)
+      {
+          return Integer.MIN_VALUE;
+      }
+    
+      
+      int leftMax = max(node.left);
+      int rightMax = max(node.right);
+      int totalMax =  left < right ? right : left;
+      int finalMax = node.data < totalMax ? totalMax : node.data;
+      return finalMax;
+    
+  }
+
+  public static int height(Node node) {
+    if(node == null)
+      {
+          return 0;   // -1 for edges , 0 for nodes
+      }
+      
+      int leftht = height(node.left);
+      int rightht = height(node.right);
+      int totalht = 1 + Math.max(leftht, rightht);
+      return totalht;
+    
+  }
 }
