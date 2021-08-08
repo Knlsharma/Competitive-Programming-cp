@@ -203,4 +203,143 @@ class tree
       return totalht;
     
   }
+/*
+Levelorder Traversal Of Binary Tree
+*/
+  // rpa : remove, print , add
+  // using queue
+  public static void levelOrder(Node node) {
+    Queue<Node> mq = new ArrayDeque<>();
+    mq.add(node);
+
+    while (mq.size() > 0)
+    {
+      int count = mq.size();
+      for (int i = 0 ; i < count ; i++)
+      {
+        node = mq.remove();
+        System.out.print(node.data + " ");
+
+        if (node.left != null)
+        {
+          mq.add(node.left);
+        }
+
+        if (node.right != null)
+        {
+          mq.add(node.right);
+        }
+      }
+        System.out.println();
+    }
+
+  }
+
+
+// Iterative Pre, Post And Inorder Traversals Of Binary Tree
+  // using stack
+    // using pair class and states
+  /**
+   * 1 -> preorder then s++ then left 
+   * 2 -> indorder then s++ then right
+   * 3 -> postorder then pop
+   */
+   
+  public static void iterativePrePostInTraversal(Node node) {
+      Stack<Pair> st = new Stack<>();
+      Pair rootpair = new Pair(node, 1);
+      st.push(rootpair);
+      
+      String pre = "";
+      String in = "";
+      String post = "";
+      
+      while(st.size() > 0)
+      {
+          Pair top = st.peek();
+          
+          if(top.state == 1)   // pre , s++ , left
+          {
+              pre += top.node.data + " ";
+              top.state++;
+              
+              if(top.node.left != null)
+              {
+                  Pair pairR = new Pair(top.node.left,1);
+                  st.push(pairR);
+              }
+          }
+          else if(top.state == 2)   // in , s++ , right
+          {
+               in += top.node.data + " ";
+               top.state++;
+            if(top.node.right != null)
+              {
+                  Pair pairR = new Pair(top.node.right,1);
+                  st.push(pairR);
+              }
+          }
+          else
+          {
+               post += top.node.data + " ";   // post, pop
+               st.pop();
+          }
+      }
+      System.out.println(pre);
+      System.out.println(in);
+      System.out.println(post);
+  }
+
+  // find and add in list 
+
+  static ArrayList<Integer> path;
+  public static boolean find(Node node, int data) {
+      if(node == null) // base
+      {
+          return false;
+      }
+      
+      if(node.data == data)  // self
+      {
+          path.add(node.data);
+          return true;
+      }
+      
+     boolean presentInLeft = find(node.left , data);
+     
+     if(presentInLeft)  // left
+     {
+         path.add(node.data);
+         return true;
+     }
+     
+     boolean presentInRight = find(node.right , data);
+     
+     if(presentInRight)  // right
+     {
+         path.add(node.data);
+         return true;
+     }
+     return false;  // not found 
+  }
+
+  // Print K Levels Down
+
+  public static void printKLevelsDown(Node node, int k){
+      if(node == null || k < 0)
+      {
+          return;
+      }
+      if(k == 0)
+      {
+          System.out.println(node.data);
+      }
+      
+     printKLevelsDown(node.left,k-1);
+     printKLevelsDown(node.right,k-1);
+  }
+
+
+// Print Nodes K Distance Away
+
 }
