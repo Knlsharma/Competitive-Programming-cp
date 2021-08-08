@@ -339,7 +339,200 @@ Levelorder Traversal Of Binary Tree
      printKLevelsDown(node.right,k-1);
   }
 
+  public static void printKLevelsDownWithBlocker(Node node, int k, Node blocker){
+      if(node == null || k < 0 || node == blocker)
+      {
+          return;
+      }
+      if(k == 0)
+      {
+          System.out.println(node.data);
+      }
+      
+     printKLevelsDownWithBlocker(node.left,k-1,blocker);
+     printKLevelsDownWithBlocker(node.right,k-1,blocker);
+  }
 
 // Print Nodes K Distance Away
+  public static void printKNodesFar(Node node, int data, int k) {
+    path = new ArrayList<>(); 
+    find(node, data);
+    for(int i = 0 ; i < path.size(); i++)
+    {
+    printKLevelsDownWithBlocker(path.get(i), k - i , i == 0 ? null : path.get(i-1));
+        
+    }
+  }
+
+
+// Path To Leaf From Root In Range
+  public static void pathToLeafFromRoot(Node node, String path, int sum, int lo, int hi){
+      if(node == null)
+      {
+          return;
+      }
+      if(node.left == null && node.right == null)
+      {
+          sum += node.data;
+          if(sum >= lo && sum <= hi)
+          {
+              System.out.println(path + node.data);
+          }
+          return;
+      }
+      pathToLeafFromRoot(node.left , path + node.data + " ", sum + node.data, lo , hi);
+      pathToLeafFromRoot(node.right,path + node.data + " ", sum + node.data, lo , hi);
+  }
+
+
+// Transform To Left-cloned Tree
+    public static Node createLeftCloneTree(Node node){
+      if(node == null)
+      {
+          return null;
+      }
+      
+     Node lcr =  createLeftCloneTree(node.left);
+     Node rcr =  createLeftCloneTree(node.right);
+     
+     Node newNode = new Node(node.data,lcr, null);
+     node.left = newNode;
+     node.right = rcr;
+     return node;
+     
+  }
+
+// Transform To Normal From Left-cloned Tree
+    public static Node transBackFromLeftClonedTree(Node node){
+    if(node == null)
+     {
+          return null;
+      }
+    Node lcr = transBackFromLeftClonedTree(node.left.left);
+    Node rcr = transBackFromLeftClonedTree(node.right);
+    
+    node.left = lcr;
+    node.right = rcr;
+    
+    return node;
+    
+  }
+
+  // Print Single Child Nodes
+  public static void printSingleChildNodes(Node node, Node parent){
+   if(node == null)
+   {
+       return;
+   }
+   
+  if(parent != null && parent.left == node && parent.right == null)
+  {
+      System.out.println(node.data);
+  }
+  else if(parent != null && parent.right == node && parent.left == null)
+  {
+      System.out.println(node.data);      
+  }
+   
+   printSingleChildNodes(node.left, node);
+   printSingleChildNodes(node.right, node);
+   
+  }
+
+  // Remove Leaves In Binary Tree
+    public static Node removeLeaves(Node node){
+     if(node == null)   // single child
+     {
+          return null;
+     }
+      
+     if(node.left == null && node.right == null)
+     {
+         return null;
+     }
+      
+     Node NewleftRoot = removeLeaves(node.left);
+     Node NewrightRoot = removeLeaves(node.right);
+      
+     node.left = NewleftRoot;
+     node.right = NewrightRoot;
+     
+     return node;
+      
+  }
+
+  // Diameter Of A Binary Tree
+  // O(n^2)
+    public static int diameter1(Node node) { 
+      if(node == null)
+      {
+          return 0;
+      }
+      
+      int leftDia = diameter1(node.left); // max deepest in left tree b/w two node in left side
+      int rightDia = diameter1(node.right); // max deepest in right tree b/w two node in left side
+      
+      // max distance b/w left deepest and right deepest.
+      
+     int f = height(node.left) + height(node.right) + 2;
+     
+     int dia = Math.max(Math.max(leftDia, rightDia), f);
+     return dia;
+      
+  }
+
+    // Diameter Of A Binary Tree
+  // O(n)
+
+  static class DiaPair
+  {
+    int ht;
+    int dia;
+  }
+
+  public static DiaPair diameter2(Node node) {
+    if (node == null)
+    {
+      DiaPair basePair = new DiaPair();
+      basePair.ht = -1;
+      basePair.dia = 0;
+      return basePair;
+    }
+
+    DiaPair leftPair = diameter2(node.left); // max deepest in left tree b/w two node in left side
+    DiaPair rightPair = diameter2(node.right); // max deepest in right tree b/w two node in left side
+
+    DiaPair newPair = new DiaPair();
+    newPair.ht = Math.max(leftPair.ht, rightPair.ht) + 1;
+    int fes = leftPair.ht + rightPair.ht + 2;
+    newPair.dia = Math.max(Math.max(leftPair.dia, rightPair.dia), fes);
+
+    return newPair;
+  }
+
+
+// Tilt Of Binary Tree
+// return sum
+// change tilt
+// based on travel and change strategy
+
+  static int tilt = 0;
+  public static int tilt(Node node) {
+
+    if ( node == null)
+    {
+      return 0;
+    }
+
+    int ls = tilt(node.left);  // will return left sum and change tilt left side
+    int rs = tilt(node.right);  // will return right sum and change tilt right side
+
+    int loclTilt = Math.abs(ls - rs);
+    tilt += loclTilt;
+
+    int totalSum = ls + rs + node.data;
+    return totalSum;
+
+  }
 
 }
