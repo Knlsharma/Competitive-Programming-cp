@@ -72,5 +72,108 @@ class HashMapAndHeap {
 
 }
 
+// Longest Consecutive Sequence Of Elements
+public static void LowestCS(int[] arr) {
+	HashMap<Integer, Boolean> hm = new HashMap<Integer, Boolean>();
+
+
+	for (int val : arr) {
+		hm.put(val, true);
+	}
+
+	for (int val : arr) {
+		if (hm.containsKey(val - 1)) {
+			hm.put(val, true);
+		}
+
+	}
+
+	int msp = 0;
+	int ml = 0;
+	for (int val : arr) {
+		int tl = 1;
+		int tsp = val;
+		while (hm.containsKey(tl + tsp)) {
+			tl++;
+		}
+		if (tl > ml) {
+			ml = tl;
+			msp = tsp;
+		}
+	}
+
+	for (int i = 0 ; i < ml ; i++) {
+		System.out.println(msp + i);
+	}
+}
+
+/*
+ *  Priority Queue Operations
+
+ *  peek : T => O(1)
+ *  add : T => O(log n)
+ *  remove :  T => O(log n)
+ */
+
+PriorityQueue<Integer> pq = new PriorityQueue<>();
+//   PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+int[] ranks = {12, 12, 31, 1, 23, 53, 9};
+
+for (int val : ranks) { // O(n)
+	pq.add(val);         // O(logn)
+}
+// Overall Complexity : O(nlogn) = Loop + add in queue
+
+while (pq.size() > 0) {  // O(n)
+	System.out.println(pq.peek());   // O(1)
+	pq.remove();           // O(logn)
+}
+
+// K Largest Elements
+public static void kLargest(int[] arr, int k) {
+	if (k == 0 || arr.length == 0) {
+		return;
+	}
+
+	PriorityQueue<Integer> pq = new PriorityQueue<>();
+	for (int i = 0 ; i < arr.length ; i++) {
+		if (i < k) {
+			pq.add(arr[i]);
+		} else {
+			if (arr[i] > pq.peek()) {
+				pq.remove(pq.peek());
+				pq.add(arr[i]);
+			}
+		}
+	}
+
+	while (pq.size() > 0) {  // O(n)
+		System.out.println(pq.peek());   // O(1)
+		pq.remove();           // O(logn)
+	}
 
 }
+
+
+// Sort K-sorted Array
+public static void sortKSortedArray(int[] arr, int k) {
+	PriorityQueue<Integer> pq = new PriorityQueue<>();
+	for (int i = 0 ; i <= k ; i++) {
+		pq.add(arr[i]);
+	}
+
+	for (int i = k + 1 ; i < arr.length ; i++) {
+		System.out.println(pq.remove());
+		pq.add(arr[i]);
+	}
+
+	while (pq.size() > 0) {
+		System.out.println(pq.remove());
+	}
+}
+
+// Median Priority Queue
+
+
+}
+
